@@ -10,14 +10,16 @@ architectury {
     minecraft = project.minecraft_version
 }
 
-forgix {
-    group = "cc.cassian"
-    mergedJarName = "creeper-confetti-plus-${mod_version}.jar"
-}
 
 allprojects {
     group = rootProject.maven_group
-    version = rootProject.mod_version
+    version = rootProject.mod_version + "+" + minecraft_version
+}
+
+
+forgix {
+    group = "cc.cassian"
+    mergedJarName = "creeper-confetti-plus-${version}.jar"
 }
 
 subprojects {
