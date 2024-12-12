@@ -24,7 +24,7 @@ public abstract class CreeperEntityMixin {
   @Shadow int fuseTime;
   @Shadow int explosionRadius;
 
-  @Inject(at = @At("INVOKE"), method = "tick()V")
+  @Inject(at = @At("INVOKE"), method = "tick")
   void tick(CallbackInfo info) {
     CreeperEntity that = (CreeperEntity)(Object)this;
     int fuseTime = this.fuseTime - (that.world.isClient ? 2 : 1);
