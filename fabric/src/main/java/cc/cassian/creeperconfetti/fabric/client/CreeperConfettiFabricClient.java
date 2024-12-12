@@ -15,6 +15,6 @@ public final class CreeperConfettiFabricClient implements ClientModInitializer {
     }
 
     public static void registerConfetti() {
-        Registry.register(Registries.SOUND_EVENT, confetti.id(), confetti);
+        Registry.register(Registries.SOUND_EVENT, confetti.getId(), confetti);
     }
 }

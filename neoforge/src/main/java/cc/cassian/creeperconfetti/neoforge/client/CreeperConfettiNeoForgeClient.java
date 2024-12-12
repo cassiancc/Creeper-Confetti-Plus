@@ -21,7 +21,7 @@ public class CreeperConfettiNeoForgeClient {
 
     public static void registerConfetti(IEventBus eventBus) {
         DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(RegistryKeys.SOUND_EVENT, MOD_ID);
-        SOUNDS.register(confetti.id().getPath(), () -> confetti);
+        SOUNDS.register(confetti.getId().getPath(), () -> confetti);
         SOUNDS.register(eventBus);
     }
 
