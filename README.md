@@ -1,5 +1,5 @@
 <center>
-<img width=80% src="https://resources.godsted.com/modrinth/creeperconfetti/hero_mr.webp">
+<img width=80% src="https://resources.godsted.com/modrinth/creeperconfetti/hero_mr.png">
 </center><br>
 
 <center text-align='center'>
