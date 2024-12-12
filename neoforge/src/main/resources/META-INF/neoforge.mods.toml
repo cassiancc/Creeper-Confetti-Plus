@@ -16,14 +16,14 @@ logoFile = "assets/creeperconfetti/icon.png"
 [[dependencies.creeperconfetti]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.4,)"
+versionRange = "[21.2,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.creeperconfetti]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.4,)"
+versionRange = "[1.21.2,)"
 ordering = "NONE"
 side = "BOTH"
 
