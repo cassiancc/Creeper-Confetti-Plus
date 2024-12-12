@@ -16,14 +16,14 @@ A mod that replaces the Creeper explosion with nice confetti - a port of Creeper
 [[dependencies.creeperconfetti]]
 modId = "neoforge"
 type = "required"
-versionRange = "[21.4,)"
+versionRange = "[21,)"
 ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.creeperconfetti]]
 modId = "minecraft"
 type = "required"
-versionRange = "[1.21.4,)"
+versionRange = "[1.21,)"
 ordering = "NONE"
 side = "BOTH"
 
