@@ -30,7 +30,7 @@ public abstract class CreeperEntityMixin {
     void tick(CallbackInfo info) {
         CreeperEntity that = (CreeperEntity)(Object)this;
         World world = that.getWorld();
-        int fuseTime = this.fuseTime - (world.isClient ? 2 : 1);
+        int fuseTime = this.fuseTime - (world.isClient() ? 2 : 1);
         if (!that.isAlive() || this.currentFuseTime < fuseTime) {
             return;
         }
@@ -47,11 +47,11 @@ public abstract class CreeperEntityMixin {
         if (shouldConfetti) {
             Vec3d pos = that.getPos();
             boolean charged = that.isCharged();
-            if (world.isClient) {
+            if (world.isClient()) {
                 if (rand.nextDouble() < ModConfig.soundChance) {
-                    world.playSound(pos.x, pos.y, pos.z, ModClient.confetti, SoundCategory.HOSTILE, 2F, 1F, false);
+                    world.playSoundClient(pos.x, pos.y, pos.z, ModClient.confetti, SoundCategory.HOSTILE, 2F, 1F, false);
                 }
-                world.playSound(pos.x, pos.y, pos.z, SoundEvents.ENTITY_FIREWORK_ROCKET_TWINKLE, SoundCategory.HOSTILE, 1F, 1F, false);
+                world.playSoundClient(pos.x, pos.y, pos.z, SoundEvents.ENTITY_FIREWORK_ROCKET_TWINKLE, SoundCategory.HOSTILE, 1F, 1F, false);
                 world.addFireworkParticle(pos.x, pos.y + 0.5F, pos.z, 0, 0, 0, CreeperConfettiMod.generateComponent((byte)4));
                 if (charged) {
                     world.addFireworkParticle(pos.x, pos.y + 2.5F, pos.z, 0, 0, 0, CreeperConfettiMod.generateComponent((byte)3));
