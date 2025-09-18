@@ -29,7 +29,7 @@ public abstract class CreeperEntityMixin {
     @Inject(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/mob/CreeperEntity;isAlive()Z"))
     void tick(CallbackInfo info) {
         CreeperEntity that = (CreeperEntity)(Object)this;
-        World world = that.getWorld();
+        World world = that.getEntityWorld();
         int fuseTime = this.fuseTime - (world.isClient() ? 2 : 1);
         if (!that.isAlive() || this.currentFuseTime < fuseTime) {
             return;

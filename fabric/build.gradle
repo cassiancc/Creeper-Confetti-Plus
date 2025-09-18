@@ -36,11 +36,11 @@ dependencies {
     modImplementation "net.fabricmc.fabric-api:fabric-api:$rootProject.fabric_api_version"
 
     // Cloth Config
-    modApi("me.shedaniel.cloth:cloth-config-fabric:$cloth_config_version") {
+    modCompileOnly("me.shedaniel.cloth:cloth-config-fabric:$cloth_config_version") {
         exclude(group: "net.fabricmc.fabric-api")
     }
     // Mod Menu
-    modApi "com.terraformersmc:modmenu:$project.modmenu_version"
+    modCompileOnly("com.terraformersmc:modmenu:$project.modmenu_version")
 
     common(project(path: ':common', configuration: 'namedElements')) { transitive false }
     shadowBundle project(path: ':common', configuration: 'transformProductionFabric')
