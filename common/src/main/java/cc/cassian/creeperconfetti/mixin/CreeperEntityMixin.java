@@ -45,7 +45,7 @@ public abstract class CreeperEntityMixin {
             }
         }
         if (shouldConfetti) {
-            Vec3d pos = that.getPos();
+            Vec3d pos = that.getEntityPos();
             boolean charged = that.isCharged();
             if (world.isClient()) {
                 if (rand.nextDouble() < ModConfig.soundChance) {
