@@ -16,7 +16,7 @@ public final class CreeperConfettiNeoForge {
     public CreeperConfettiNeoForge(IEventBus eventBus, ModContainer container) {
         // Run our common setup.
         CreeperConfettiMod.init();
-        if (FMLEnvironment.dist.equals(Dist.CLIENT)) {
+        if (FMLEnvironment.getDist().isClient()) {
             CreeperConfettiNeoForgeClient.init(eventBus);
         }
     }
