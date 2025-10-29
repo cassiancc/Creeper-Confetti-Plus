@@ -2,8 +2,8 @@ package cc.cassian.creeperconfetti.neoforge.client;
 
 import cc.cassian.creeperconfetti.ModClient;
 import cc.cassian.creeperconfetti.config.neoforge.ModConfigFactory;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.sound.SoundEvent;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.sounds.SoundEvent;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModList;
 import net.neoforged.fml.ModLoadingContext;
@@ -20,8 +20,8 @@ public class CreeperConfettiNeoForgeClient {
     }
 
     public static void registerConfetti(IEventBus eventBus) {
-        DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(RegistryKeys.SOUND_EVENT, MOD_ID);
-        SOUNDS.register(confetti.id().getPath(), () -> confetti);
+        DeferredRegister<SoundEvent> SOUNDS = DeferredRegister.create(Registries.SOUND_EVENT, MOD_ID);
+        SOUNDS.register(confetti.location().getPath(), () -> confetti);
         SOUNDS.register(eventBus);
     }
 
