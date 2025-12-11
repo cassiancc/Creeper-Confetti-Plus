@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "id": "creeperconfetti",
+  "name": "Creeper Confetti Plus",
+  "version": "${version}",
+  "authors": [
+    "cassiancc",
+    "SR2610",
+    "su226"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/creeperconfetti+",
+    "sources": "https://github.com/cassiancc/Creeper-Confetti-Plus",
+    "issues": "https://github.com/cassiancc/Creeper-Confetti-Plus/issues"
+  },
+  "description": "A mod that replaces the Creeper explosion with nice confetti - a port of Creeper Confetti to newer versions of Minecraft.",
+  "icon": "assets/creeperconfetti/icon.png",
+  "license": "MIT",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "cc.cassian.creeperconfetti.fabric.FabricEntrypoint"
+    ],
+    "client": [
+      "cc.cassian.creeperconfetti.fabric.FabricClientEntrypoint"
+    ]
+  },
+  "mixins": [
+    "creeperconfetti.mixins.json"
+  ],
+  "depends": {
+    "fabric-api": "*"
+  }
+}

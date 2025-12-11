@@ -1,0 +1,34 @@
+package cc.cassian.creeperconfetti;
+
+import cc.cassian.creeperconfetti.config.ModConfig;
+import it.unimi.dsi.fastutil.ints.IntList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.util.Collections;
+import java.util.List;
+import java.util.Random;
+import net.minecraft.world.item.component.FireworkExplosion;
+
+public class CreeperConfettiMod {
+  public static final String MOD_ID = "creeperconfetti";
+  public static final Logger LOGGER = LogManager.getLogger(MOD_ID);
+  public static final ModConfig CONFIG = ModConfig.createToml(Platform.INSTANCE.getConfigDir(), "", MOD_ID, ModConfig.class);
+
+  public static void init() {
+
+  }
+
+  public static List<FireworkExplosion> generateComponent(byte type) {
+    Random rand = new Random();
+    int[] list = new int[rand.nextInt(3) + 6];
+    list[0] = 0xE67E22;
+    list[1] = 0x00E0FF;
+    list[2] = 0x0FFF00;
+    for (int i = 3; i < list.length; i++) {
+      list[i] = rand.nextInt(0x1000000);
+    }
+    IntList colors = IntList.of(list);
+    return Collections.singletonList(new FireworkExplosion(FireworkExplosion.Shape.BURST, colors, colors, false, true));
+  }
+}

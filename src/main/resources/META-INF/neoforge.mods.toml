@@ -1,0 +1,27 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+license = "MIT"
+
+[[mods]]
+modId = "creeperconfetti"
+displayName = "Creeper Confetti Plus"
+version = "${version}"
+displayURL = ""
+logoFile = "assets/creeperconfetti/icon.png"
+authors = "cassiancc"
+description = '''A mod that replaces the Creeper explosion with nice confetti - a port of Creeper Confetti to newer versions of Minecraft.'''
+
+[[mixins]]
+config = "creeperconfetti.mixins.json"
+
+[[dependencies.creeperconfetti]]
+modId = "neoforge"
+type = "required"
+versionRange = "[21.1.181,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.creeperconfetti]]
+modId = "minecraft"
+type = "required"
+versionRange = "${minecraft}"
