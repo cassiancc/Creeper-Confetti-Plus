@@ -1,10 +1,14 @@
 @file:Suppress("UnstableApiUsage")
 
 plugins {
-    id("net.fabricmc.fabric-loom-remap")
+    id("net.fabricmc.fabric-loom")
     id("dev.kikugie.postprocess.jsonlang")
     id("me.modmuss50.mod-publish-plugin")
+    id("maven-publish")
 }
+
+val minecraft = stonecutter.current.version
+val mcVersion = stonecutter.current.project.substringBeforeLast('-')
 
 tasks.named<ProcessResources>("processResources") {
     fun prop(name: String) = project.property(name) as String
@@ -17,6 +21,11 @@ tasks.named<ProcessResources>("processResources") {
     filesMatching(listOf("fabric.mod.json", "META-INF/neoforge.mods.toml", "META-INF/mods.toml")) {
         expand(props)
     }
+
+}
+
+tasks.named("processResources") {
+    dependsOn(":${stonecutter.current.project}:stonecutterGenerate")
 }
 
 version = "${property("mod.version")}+${property("deps.minecraft")}-fabric"
@@ -28,6 +37,10 @@ jsonlang {
 }
 
 repositories {
+    mavenLocal()
+    maven ( "https://maven.minecraftforge.net" ) {
+        name = "Minecraft Forge"
+    }
     maven {
         name = "shedaniel (Cloth Config)"
         url = uri("https://maven.shedaniel.me/")
@@ -106,42 +119,26 @@ repositories {
 
 dependencies {
     minecraft("com.mojang:minecraft:${property("deps.minecraft")}")
-    mappings(loom.layered {
-        officialMojangMappings()
-        if (hasProperty("deps.parchment"))
-            parchment("org.parchmentmc.data:parchment-${property("deps.parchment")}@zip")
-    })
-    modImplementation("net.fabricmc:fabric-loader:${property("deps.fabric-loader")}")
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
+    implementation("net.fabricmc:fabric-loader:${property("deps.fabric-loader")}")
 
-    // Kaleido + McQoy
+    implementation("net.fabricmc.fabric-api:fabric-api:${property("deps.fabric_api")}")
+
     implementation("folk.sisby:kaleido-config:${property("deps.kaleido")}")
     include("folk.sisby:kaleido-config:${property("deps.kaleido")}")
-    modLocalRuntime("maven.modrinth:mcqoy:${property("deps.mcqoy")}")
 
-    // Mod Menu - required by McQoy
-    if (hasProperty("deps.modmenu"))
-        modLocalRuntime("com.terraformersmc:modmenu:${property("deps.modmenu")}")
-
-    // YACL - required by McQoy
-    if (hasProperty("deps.yacl")) {
-        modLocalRuntime("dev.isxander:yet-another-config-lib:${property("deps.yacl")}-fabric")
-    }
-
-    val modules = listOf("transitive-access-wideners-v1", "registry-sync-v0", "resource-loader-v0")
-    for (it in modules) modImplementation(fabricApi.module("fabric-$it", property("deps.fabric_api") as String))
 }
-
 
 configurations.all {
     resolutionStrategy {
         force("net.fabricmc:fabric-loader:${property("deps.fabric-loader")}")
-        force("net.fabricmc:fabric-api:${property("deps.fabric_api")}")
     }
 }
 
-tasks.named("processResources") {
-    dependsOn(":${stonecutter.current.project}:stonecutterGenerate")
+stonecutter {
+    replacements.string {
+        direction = eval(current.version, ">1.21.10")
+        replace("ResourceLocation", "Identifier")
+    }
 }
 
 tasks {
@@ -151,21 +148,20 @@ tasks {
 
     register<Copy>("buildAndCollect") {
         group = "build"
-        from(remapJar.map { it.archiveFile })
+        from(jar.map { it.archiveFile })
         into(rootProject.layout.buildDirectory.file("libs/${project.property("mod.version")}"))
         dependsOn("build")
     }
 }
 
+loom.runs.named("server") {
+    isIdeConfigGenerated = false
+}
+
 java {
     withSourcesJar()
-    val javaCompat = if (stonecutter.eval(stonecutter.current.version, ">=1.21")) {
-        JavaVersion.VERSION_21
-    } else {
-        JavaVersion.VERSION_17
-    }
-    sourceCompatibility = javaCompat
-    targetCompatibility = javaCompat
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 val additionalVersionsStr = findProperty("publish.additionalVersions") as String?
@@ -176,9 +172,9 @@ val additionalVersions: List<String> = additionalVersionsStr
     ?: emptyList()
 
 publishMods {
-    file = tasks.remapJar.map { it.archiveFile.get() }
-    additionalFiles.from(tasks.remapSourcesJar.map { it.archiveFile.get() })
+    file = tasks.jar.map { it.archiveFile.get() }
 
+    // one of BETA, ALPHA, STABLE
     type = STABLE
     displayName = "${property("mod.name")} ${property("mod.version")} for ${stonecutter.current.version} Fabric"
     version = "${property("mod.version")}+${property("deps.minecraft")}-fabric"
@@ -188,10 +184,14 @@ publishMods {
     modrinth {
         projectId = property("publish.modrinth") as String
         accessToken = env.MODRINTH_API_KEY.orNull()
-        minecraftVersions.add(stonecutter.current.version)
+        if (!stonecutter.eval(mcVersion, ">1.21.10")) {
+            minecraftVersions.add(stonecutter.current.version)
+        } else {
+            minecraftVersions.add(property("deps.minecraft").toString())
+        }
         minecraftVersions.addAll(additionalVersions)
         requires("fabric-api")
-        optional("mcqoy")
+        optional("modmenu")
     }
 
     curseforge {

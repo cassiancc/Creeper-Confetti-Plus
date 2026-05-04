@@ -1,6 +1,6 @@
 package cc.cassian.creeperconfetti.fabric;
 
-//? fabric || unobf {
+//? fabric  {
 import cc.cassian.creeperconfetti.Platform;
 import net.fabricmc.loader.api.FabricLoader;
 
