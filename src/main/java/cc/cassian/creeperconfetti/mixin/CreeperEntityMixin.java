@@ -51,9 +51,9 @@ public abstract class CreeperEntityMixin {
                     world.playLocalSound(pos.x, pos.y, pos.z, ModClient.confetti, SoundSource.HOSTILE, 2F, 1F, false);
                 }
                 world.playLocalSound(pos.x, pos.y, pos.z, SoundEvents.FIREWORK_ROCKET_TWINKLE, SoundSource.HOSTILE, 1F, 1F, false);
-                world.createFireworks(pos.x, pos.y + 0.5F, pos.z, 0, 0, 0, CreeperConfettiMod.generateComponent((byte)4));
+                world.createFireworks(pos.x, pos.y + 0.5F, pos.z, 0, 0, 0, CreeperConfettiMod.generateComponent((byte)4), true);
                 if (charged) {
-                    world.createFireworks(pos.x, pos.y + 2.5F, pos.z, 0, 0, 0, CreeperConfettiMod.generateComponent((byte)3));
+                    world.createFireworks(pos.x, pos.y + 2.5F, pos.z, 0, 0, 0, CreeperConfettiMod.generateComponent((byte)3), true);
                 }
             } else {
                 if (CreeperConfettiMod.CONFIG.damage != 0) {
